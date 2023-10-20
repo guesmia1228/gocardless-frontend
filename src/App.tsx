@@ -5,22 +5,25 @@ import Checkout from "./pages/Checkout";
 import CollectBankInfo from "./pages/CollectBankInfo";
 import Confirm from "./pages/Confirm";
 import Success from "./pages/Success";
+import BillingRequestProvider from "./components/BillingRequestProvider";
 
 function App() {
   return (
     <BrowserRouter>
-      <Container>
-        <Routes>
-          <Route path="/" element={<Checkout />} />
-          <Route
-            path="/collect-customer-detail"
-            element={<CollectCustomerDetail />}
-          />
-          <Route path="/collect-bank-account" element={<CollectBankInfo />} />
-          <Route path="/confirm" element={<Confirm />} />
-          <Route path="/success" element={<Success />} />
-        </Routes>
-      </Container>
+      <BillingRequestProvider>
+        <Container>
+          <Routes>
+            <Route path="/" element={<Checkout />} />
+            <Route
+              path="/collect-customer-details"
+              element={<CollectCustomerDetail />}
+            />
+            <Route path="/collect-bank-account" element={<CollectBankInfo />} />
+            <Route path="/confirm" element={<Confirm />} />
+            <Route path="/success" element={<Success />} />
+          </Routes>
+        </Container>
+      </BillingRequestProvider>
     </BrowserRouter>
   );
 }

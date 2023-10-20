@@ -1,4 +1,33 @@
+import { useNavigate } from "react-router-dom";
+import { BillingRequestContext } from "../components/BillingRequestProvider";
+import { useContext } from "react";
+import { confirmPayerDetail } from "../api";
+import {
+  BillingRequestActionStatus,
+  BillingRequestActionType,
+} from "../types/billing_request";
+
 const Confirm = () => {
+  const navigate = useNavigate();
+  const { br, setBR } = useContext(BillingRequestContext);
+
+  const handleConfirm = async () => {
+    if (br.id) {
+      const { data: res } = await confirmPayerDetail(br.id);
+
+      setBR(res);
+
+      if (
+        res.actions?.find(
+          (action) =>
+            action.type == BillingRequestActionType.ConfirmPayerDetails
+        )?.status == BillingRequestActionStatus.Completed
+      ) {
+        navigate("/success");
+      }
+    }
+  };
+
   return (
     <div>
       <h1 className="text-2xl font-bold mt-8">Please confirm your details</h1>
@@ -13,7 +42,9 @@ const Confirm = () => {
           </div>
 
           <div>
-            <button>Change</button>
+            <button onClick={() => navigate("/collect-customer-details")}>
+              Change
+            </button>
           </div>
         </div>
 
@@ -35,13 +66,18 @@ const Confirm = () => {
           </div>
 
           <div>
-            <button>Change</button>
+            <button onClick={() => navigate("/collect-bank-account")}>
+              Change
+            </button>
           </div>
         </div>
       </div>
 
       <div className="w-full flex flex-row justify-center mt-4">
-        <button className="mt-4 rounded-full bg-black hover:opacity-80 text-white p-3 w-3/4 min-w-fit">
+        <button
+          className="mt-4 rounded-full bg-black hover:opacity-80 text-white p-3 w-3/4 min-w-fit"
+          onClick={handleConfirm}
+        >
           Set up this ACH Debit Authorization
         </button>
       </div>
