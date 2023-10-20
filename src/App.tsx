@@ -3,6 +3,8 @@ import Container from "./components/Container";
 import CollectCustomerDetail from "./pages/CollectCustomerDetail";
 import Checkout from "./pages/Checkout";
 import CollectBankInfo from "./pages/CollectBankInfo";
+import Confirm from "./pages/Confirm";
+import Success from "./pages/Success";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
             element={<CollectCustomerDetail />}
           />
           <Route path="/collect-bank-account" element={<CollectBankInfo />} />
+          <Route path="/confirm" element={<Confirm />} />
+          <Route path="/success" element={<Success />} />
         </Routes>
       </Container>
     </BrowserRouter>
