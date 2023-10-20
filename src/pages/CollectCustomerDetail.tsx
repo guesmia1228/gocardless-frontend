@@ -7,6 +7,7 @@ import {
   BillingRequestActionStatus,
   BillingRequestActionType,
 } from "../types/billing_request";
+import ProductInfo from "../components/ProductInfo";
 
 const countryOptions = [{ label: "United States", value: "US" }];
 const regions = [
@@ -66,8 +67,10 @@ const CollectCustomerDetail = () => {
 
   return (
     <div className="space-y-3">
+      <ProductInfo />
+
       <form onSubmit={handleSubmit(handleCollect)}>
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-8">
           <label className="form-label">Country of residence</label>
           <select
             {...register("customer_billing_detail.country_code", {

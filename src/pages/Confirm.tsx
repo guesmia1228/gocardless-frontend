@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { BillingRequestContext } from "../components/BillingRequestProvider";
 import { useContext } from "react";
-import { confirmPayerDetail } from "../api";
+import { confirmPayerDetail, fulfilBillingRequest } from "../api";
 import {
   BillingRequestActionStatus,
   BillingRequestActionType,
 } from "../types/billing_request";
+import ProductInfo from "../components/ProductInfo";
 
 const Confirm = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Confirm = () => {
   const handleConfirm = async () => {
     if (br.id) {
       const { data: res } = await confirmPayerDetail(br.id);
+      await fulfilBillingRequest(br.id);
 
       setBR(res);
 
@@ -30,15 +32,21 @@ const Confirm = () => {
 
   return (
     <div>
+      <ProductInfo />
+
       <h1 className="text-2xl font-bold mt-8">Please confirm your details</h1>
 
       <div className="rounded-lg border border-gray-300 p-6 mt-6">
         <div className="w-full flex flex-row">
           <div className="flex flex-1 flex-col">
             <p>Name</p>
-            <p className="font-bold">John Doe</p>
+            <p className="font-bold">
+              {br.resources?.customer?.given_name +
+                " " +
+                br.resources?.customer?.family_name}
+            </p>
             <p className="mt-6">Email</p>
-            <p className="font-bold">johndoe@admin.com</p>
+            <p className="font-bold">{br.resources?.customer?.email}</p>
           </div>
 
           <div>
@@ -60,7 +68,10 @@ const Confirm = () => {
 
               <div className="flex-1">
                 <p>Account number</p>
-                <p className="font-bold">Ending ******34</p>
+                <p className="font-bold">
+                  Ending ******
+                  {br.resources?.customer_bank_account?.account_number_ending}
+                </p>
               </div>
             </div>
           </div>

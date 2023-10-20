@@ -8,6 +8,7 @@ import {
   BillingRequestActionStatus,
   BillingRequestActionType,
 } from "../types/billing_request";
+import ProductInfo from "../components/ProductInfo";
 
 export interface CustomerBankAccount {
   account_holder_name: string;
@@ -49,6 +50,8 @@ const CollectBankInfo = () => {
 
   return (
     <form onSubmit={handleSubmit(handleCollect)}>
+      <ProductInfo />
+
       <h3 className="text-xl font-bold mt-8">Your personal details</h3>
 
       <div className="flex flex-col">
