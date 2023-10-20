@@ -3,5 +3,23 @@
 @tailwind utilities;
 
 body {
-  @apply bg-slate-100;
+  @apply bg-slate-100 text-gray-800;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  input {
+    @apply rounded-md my-1 border border-gray-500 p-3 text-lg font-medium w-full outline-none focus-within:border-2
+  }
+
+  select {
+    @apply rounded-md my-1 border border-gray-500 p-3 text-lg font-medium w-full outline-none focus-within:border-2
+  }
+}
+
+@layer components {
+  .form-label {
+    @apply text-lg font-bold my-1;
+    font-family: Arial, Helvetica, sans-serif;
+  }
 }
